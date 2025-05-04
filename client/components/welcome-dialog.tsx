@@ -38,7 +38,7 @@ export default function WelcomeDialog({ open, onSubmit }: WelcomeDialogProps) {
     <Dialog open={open}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Bem-vindo ao Transferência de Arquivos</DialogTitle>
+          <DialogTitle>Bem-vindo ao SocketDrop</DialogTitle>
           <DialogDescription>
             Digite seu nome para começar a compartilhar arquivos com outros
             usuários.
