@@ -620,7 +620,7 @@ export default function FileTransferPage() {
           </Card>
 
           {/* File Transfer Card */}
-          <Card className={!pairedUser ? "hidden lg:block" : ""}>
+          <Card>
             <CardHeader>
               <CardTitle className="flex items-center">
                 <UserCheck className="h-5 w-5 mr-2" />
