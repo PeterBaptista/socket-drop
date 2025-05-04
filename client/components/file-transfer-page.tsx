@@ -417,176 +417,88 @@ export default function FileTransferPage() {
         isPaired={!!pairedUser}
       />
 
-      <div className="container mx-auto py-4 px-4 h-screen flex flex-col">
+      <div className="container mx-auto py-4 px-4">
         <div className="w-full  h-fit flex justify-start items-start lg:justify-center  ">
           <LogoIcon className="w-full max-w-lg h-fit fill-primary" />
         </div>
 
-        <div className="w-full flex-1 flex justify-center items-center ">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Connection Status Card */}
-            <Card className="lg:col-span-1">
-              <CardHeader>
-                <CardTitle className="flex items-center justify-between">
-                  Status
-                  {isConnected ? (
-                    <Badge
-                      variant="outline"
-                      className="bg-green-100 text-green-800"
-                    >
-                      <Wifi className="h-4 w-4 mr-1" /> Conectado
-                    </Badge>
-                  ) : (
-                    <Badge
-                      variant="outline"
-                      className="bg-red-100 text-red-800"
-                    >
-                      <WifiOff className="h-4 w-4 mr-1" /> Desconectado
-                    </Badge>
-                  )}
-                </CardTitle>
-                <CardDescription>{connectionStatus}</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <div>
-                    <label className="text-sm font-medium">Seu Nome</label>
-                    <div className="flex items-center mt-1 space-x-2">
-                      <Avatar>
-                        <AvatarFallback>{getInitials(username)}</AvatarFallback>
-                      </Avatar>
-                      <span className="font-medium">{username}</span>
-                    </div>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Connection Status Card */}
+          <Card className="lg:col-span-1">
+            <CardHeader>
+              <CardTitle className="flex items-center justify-between">
+                Status
+                {isConnected ? (
+                  <Badge
+                    variant="outline"
+                    className="bg-green-100 text-green-800"
+                  >
+                    <Wifi className="h-4 w-4 mr-1" /> Conectado
+                  </Badge>
+                ) : (
+                  <Badge variant="outline" className="bg-red-100 text-red-800">
+                    <WifiOff className="h-4 w-4 mr-1" /> Desconectado
+                  </Badge>
+                )}
+              </CardTitle>
+              <CardDescription>{connectionStatus}</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <div>
+                  <label className="text-sm font-medium">Seu Nome</label>
+                  <div className="flex items-center mt-1 space-x-2">
+                    <Avatar>
+                      <AvatarFallback>{getInitials(username)}</AvatarFallback>
+                    </Avatar>
+                    <span className="font-medium">{username}</span>
                   </div>
+                </div>
 
-                  {pairedUser && (
-                    <div>
-                      <label className="text-sm font-medium">Pareado Com</label>
-                      <div className="flex items-center justify-between mt-1 p-3 border rounded-md">
-                        <div className="flex items-center space-x-2">
-                          <Avatar>
-                            <AvatarFallback>
-                              {getInitials(pairedUser.name)}
-                            </AvatarFallback>
-                          </Avatar>
-                          <span>{pairedUser.name}</span>
-                        </div>
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={disconnectPair}
-                        >
-                          Desconectar
-                        </Button>
+                {pairedUser && (
+                  <div>
+                    <label className="text-sm font-medium">Pareado Com</label>
+                    <div className="flex items-center justify-between mt-1 p-3 border rounded-md">
+                      <div className="flex items-center space-x-2">
+                        <Avatar>
+                          <AvatarFallback>
+                            {getInitials(pairedUser.name)}
+                          </AvatarFallback>
+                        </Avatar>
+                        <span>{pairedUser.name}</span>
                       </div>
-                    </div>
-                  )}
-
-                  {!pairedUser && (
-                    <div className="mt-4 lg:hidden">
                       <Button
                         variant="outline"
-                        className="w-full"
-                        onClick={() => setShowUsersDialog(true)}
+                        size="sm"
+                        onClick={disconnectPair}
                       >
-                        <Users className="h-4 w-4 mr-2" />
-                        Ver Usuários Online
+                        Desconectar
                       </Button>
                     </div>
-                  )}
+                  </div>
+                )}
 
-                  {/* Pending Pair Requests */}
-                  {pendingPairRequests.length > 0 && (
-                    <div>
-                      <label className="text-sm font-medium">
-                        Solicitações de Pareamento
-                      </label>
-                      <div className="space-y-2 mt-1">
-                        {pendingPairRequests.map((user) => (
-                          <div
-                            key={user.id}
-                            className="flex items-center justify-between p-3 border rounded-md"
-                          >
-                            <div className="flex items-center space-x-2">
-                              <Avatar>
-                                <AvatarFallback>
-                                  {getInitials(user.name)}
-                                </AvatarFallback>
-                              </Avatar>
-                              <span>{user.name}</span>
-                            </div>
-                            <div className="flex space-x-2">
-                              <Button
-                                variant="outline"
-                                size="sm"
-                                onClick={() =>
-                                  acceptPairRequest(user.id, user.name)
-                                }
-                              >
-                                Aceitar
-                              </Button>
-                              <Button
-                                variant="outline"
-                                size="sm"
-                                onClick={() => rejectPairRequest(user.id)}
-                              >
-                                Rejeitar
-                              </Button>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
+                {!pairedUser && (
+                  <div className="mt-4 lg:hidden">
+                    <Button
+                      variant="outline"
+                      className="w-full"
+                      onClick={() => setShowUsersDialog(true)}
+                    >
+                      <Users className="h-4 w-4 mr-2" />
+                      Ver Usuários Online
+                    </Button>
+                  </div>
+                )}
 
-                  {/* Sent Pair Requests */}
-                  {sentPairRequests.length > 0 && (
-                    <div>
-                      <label className="text-sm font-medium">
-                        Solicitações Enviadas
-                      </label>
-                      <div className="space-y-2 mt-1">
-                        {sentPairRequests.map((user) => (
-                          <div
-                            key={user.id}
-                            className="flex items-center justify-between p-3 border rounded-md"
-                          >
-                            <div className="flex items-center space-x-2">
-                              <Avatar>
-                                <AvatarFallback>
-                                  {getInitials(user.name)}
-                                </AvatarFallback>
-                              </Avatar>
-                              <span>{user.name}</span>
-                            </div>
-                            <Badge variant="outline">Pendente</Badge>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Online Users Card */}
-            <Card className="hidden lg:block">
-              <CardHeader>
-                <CardTitle className="flex items-center">
-                  <Users className="h-5 w-5 mr-2" />
-                  Usuários Online
-                </CardTitle>
-                <CardDescription>
-                  {pairedUser
-                    ? "Você já está pareado com alguém"
-                    : "Selecione um usuário para parear"}
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                {onlineUsers.length > 0 ? (
-                  <ScrollArea className="h-[300px] pr-4">
-                    <div className="space-y-2">
-                      {onlineUsers.map((user) => (
+                {/* Pending Pair Requests */}
+                {pendingPairRequests.length > 0 && (
+                  <div>
+                    <label className="text-sm font-medium">
+                      Solicitações de Pareamento
+                    </label>
+                    <div className="space-y-2 mt-1">
+                      {pendingPairRequests.map((user) => (
                         <div
                           key={user.id}
                           className="flex items-center justify-between p-3 border rounded-md"
@@ -599,137 +511,217 @@ export default function FileTransferPage() {
                             </Avatar>
                             <span>{user.name}</span>
                           </div>
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => sendPairRequest(user.id, user.name)}
-                            disabled={
-                              !!pairedUser ||
-                              sentPairRequests.some((req) => req.id === user.id)
-                            }
-                          >
-                            <UserPlus className="h-4 w-4 mr-1" />
-                            Parear
-                          </Button>
+                          <div className="flex space-x-2">
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() =>
+                                acceptPairRequest(user.id, user.name)
+                              }
+                            >
+                              Aceitar
+                            </Button>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => rejectPairRequest(user.id)}
+                            >
+                              Rejeitar
+                            </Button>
+                          </div>
                         </div>
                       ))}
                     </div>
-                  </ScrollArea>
-                ) : (
-                  <div className="text-center py-8 text-muted-foreground">
-                    Nenhum outro usuário online
                   </div>
                 )}
-              </CardContent>
-            </Card>
 
-            {/* File Transfer Card */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center">
-                  <UserCheck className="h-5 w-5 mr-2" />
-                  Transferência de Arquivos
-                </CardTitle>
-                <CardDescription>
-                  {pairedUser
-                    ? `Enviar arquivos para ${pairedUser.name}`
-                    : "Pareie com alguém para enviar arquivos"}
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
+                {/* Sent Pair Requests */}
+                {sentPairRequests.length > 0 && (
                   <div>
                     <label className="text-sm font-medium">
-                      Selecionar Arquivo
+                      Solicitações Enviadas
                     </label>
-                    <Input
-                      type="file"
-                      onChange={handleFileSelect}
-                      className="mt-1"
-                      disabled={!pairedUser}
-                    />
-                    {selectedFile && (
-                      <p className="text-sm mt-1">
-                        {selectedFile.name} ({formatFileSize(selectedFile.size)}
-                        )
-                      </p>
-                    )}
-                  </div>
-
-                  <Button
-                    onClick={sendFile}
-                    disabled={!isConnected || !selectedFile || !pairedUser}
-                    className="w-full"
-                  >
-                    <Upload className="h-4 w-4 mr-2" />
-                    Enviar Arquivo
-                  </Button>
-
-                  {/* Received Files */}
-                  {receivedFiles.length > 0 && (
-                    <div className="mt-6">
-                      <h3 className="text-sm font-medium mb-2">
-                        Arquivos Recebidos
-                      </h3>
-                      <ScrollArea className="h-[200px] pr-4">
-                        <div className="space-y-2">
-                          {receivedFiles.map((file, index) => (
-                            <div
-                              key={index}
-                              className="flex items-center justify-between p-3 border rounded-md"
-                            >
-                              <div>
-                                <p className="font-medium">{file.name}</p>
-                                <p className="text-sm text-muted-foreground">
-                                  {formatFileSize(file.size)}
-                                </p>
-                              </div>
-                              <a
-                                href={file.url}
-                                download={file.name}
-                                className="flex items-center text-sm text-primary hover:underline"
-                              >
-                                <Download className="h-4 w-4 mr-1" />
-                                Baixar
-                              </a>
-                            </div>
-                          ))}
+                    <div className="space-y-2 mt-1">
+                      {sentPairRequests.map((user) => (
+                        <div
+                          key={user.id}
+                          className="flex items-center justify-between p-3 border rounded-md"
+                        >
+                          <div className="flex items-center space-x-2">
+                            <Avatar>
+                              <AvatarFallback>
+                                {getInitials(user.name)}
+                              </AvatarFallback>
+                            </Avatar>
+                            <span>{user.name}</span>
+                          </div>
+                          <Badge variant="outline">Pendente</Badge>
                         </div>
-                      </ScrollArea>
+                      ))}
                     </div>
-                  )}
-                </div>
-              </CardContent>
-              <CardFooter
-                className={cn(
-                  "flex-col items-start",
-                  transferStatus ? "block" : "hidden"
+                  </div>
                 )}
-              >
-                <div className="w-full space-y-2">
-                  <Alert
-                    variant={
-                      transferStatus.includes("Error")
-                        ? "destructive"
-                        : "default"
-                    }
-                  >
-                    <AlertDescription className="flex items-center">
-                      {transferStatus.includes("Error") ? (
-                        <AlertCircle className="h-4 w-4 mr-2" />
-                      ) : transferStatus.includes("success") ? (
-                        <CheckCircle2 className="h-4 w-4 mr-2" />
-                      ) : null}
-                      {transferStatus}
-                    </AlertDescription>
-                  </Alert>
-                  {transferProgress > 0 && (
-                    <Progress value={transferProgress} className="w-full" />
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Online Users Card */}
+          <Card className="hidden lg:block">
+            <CardHeader>
+              <CardTitle className="flex items-center">
+                <Users className="h-5 w-5 mr-2" />
+                Usuários Online
+              </CardTitle>
+              <CardDescription>
+                {pairedUser
+                  ? "Você já está pareado com alguém"
+                  : "Selecione um usuário para parear"}
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              {onlineUsers.length > 0 ? (
+                <ScrollArea className="h-[300px] pr-4">
+                  <div className="space-y-2">
+                    {onlineUsers.map((user) => (
+                      <div
+                        key={user.id}
+                        className="flex items-center justify-between p-3 border rounded-md"
+                      >
+                        <div className="flex items-center space-x-2">
+                          <Avatar>
+                            <AvatarFallback>
+                              {getInitials(user.name)}
+                            </AvatarFallback>
+                          </Avatar>
+                          <span>{user.name}</span>
+                        </div>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => sendPairRequest(user.id, user.name)}
+                          disabled={
+                            !!pairedUser ||
+                            sentPairRequests.some((req) => req.id === user.id)
+                          }
+                        >
+                          <UserPlus className="h-4 w-4 mr-1" />
+                          Parear
+                        </Button>
+                      </div>
+                    ))}
+                  </div>
+                </ScrollArea>
+              ) : (
+                <div className="text-center py-8 text-muted-foreground">
+                  Nenhum outro usuário online
+                </div>
+              )}
+            </CardContent>
+          </Card>
+
+          {/* File Transfer Card */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center">
+                <UserCheck className="h-5 w-5 mr-2" />
+                Transferência de Arquivos
+              </CardTitle>
+              <CardDescription>
+                {pairedUser
+                  ? `Enviar arquivos para ${pairedUser.name}`
+                  : "Pareie com alguém para enviar arquivos"}
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <div>
+                  <label className="text-sm font-medium">
+                    Selecionar Arquivo
+                  </label>
+                  <Input
+                    type="file"
+                    onChange={handleFileSelect}
+                    className="mt-1"
+                    disabled={!pairedUser}
+                  />
+                  {selectedFile && (
+                    <p className="text-sm mt-1">
+                      {selectedFile.name} ({formatFileSize(selectedFile.size)})
+                    </p>
                   )}
                 </div>
-              </CardFooter>
-            </Card>
-          </div>
+
+                <Button
+                  onClick={sendFile}
+                  disabled={!isConnected || !selectedFile || !pairedUser}
+                  className="w-full"
+                >
+                  <Upload className="h-4 w-4 mr-2" />
+                  Enviar Arquivo
+                </Button>
+
+                {/* Received Files */}
+                {receivedFiles.length > 0 && (
+                  <div className="mt-6">
+                    <h3 className="text-sm font-medium mb-2">
+                      Arquivos Recebidos
+                    </h3>
+                    <ScrollArea className="h-[200px] pr-4">
+                      <div className="space-y-2">
+                        {receivedFiles.map((file, index) => (
+                          <div
+                            key={index}
+                            className="flex items-center justify-between p-3 border rounded-md"
+                          >
+                            <div>
+                              <p className="font-medium">{file.name}</p>
+                              <p className="text-sm text-muted-foreground">
+                                {formatFileSize(file.size)}
+                              </p>
+                            </div>
+                            <a
+                              href={file.url}
+                              download={file.name}
+                              className="flex items-center text-sm text-primary hover:underline"
+                            >
+                              <Download className="h-4 w-4 mr-1" />
+                              Baixar
+                            </a>
+                          </div>
+                        ))}
+                      </div>
+                    </ScrollArea>
+                  </div>
+                )}
+              </div>
+            </CardContent>
+            <CardFooter
+              className={cn(
+                "flex-col items-start",
+                transferStatus ? "block" : "hidden"
+              )}
+            >
+              <div className="w-full space-y-2">
+                <Alert
+                  variant={
+                    transferStatus.includes("Error") ? "destructive" : "default"
+                  }
+                >
+                  <AlertDescription className="flex items-center">
+                    {transferStatus.includes("Error") ? (
+                      <AlertCircle className="h-4 w-4 mr-2" />
+                    ) : transferStatus.includes("success") ? (
+                      <CheckCircle2 className="h-4 w-4 mr-2" />
+                    ) : null}
+                    {transferStatus}
+                  </AlertDescription>
+                </Alert>
+                {transferProgress > 0 && (
+                  <Progress value={transferProgress} className="w-full" />
+                )}
+              </div>
+            </CardFooter>
+          </Card>
         </div>
       </div>
     </>
